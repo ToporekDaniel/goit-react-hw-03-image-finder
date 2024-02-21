@@ -1,13 +1,11 @@
 import css from './imagegalleryitem.module.css';
 
-export const ImageGalleryItem = () => {
+export const ImageGalleryItem = ({ a, src, alt, key }) => {
   return (
-    <a href="." className={css.ImageGalleryItem}>
-      <img
-        className={css.ImageGalleryItemImage}
-        src="https://placehold.co/400"
-        alt="Placeholder"
-      />
-    </a>
+    <li key={key} className={css.ImageGalleryItem}>
+      <a href={a}>
+        <img className={css.ImageGalleryItemImage} src={src} alt={alt} />
+      </a>
+    </li>
   );
 };
