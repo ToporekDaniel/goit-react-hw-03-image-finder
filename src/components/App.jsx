@@ -3,6 +3,7 @@ import { Searchbar } from './searchbar/Searchbar';
 import { ImageGallery } from './imagegallery/ImageGallery';
 import { Button } from './button/Button';
 import { getImages } from './axios/axiosGet';
+import { RotatingLines } from 'react-loader-spinner';
 
 export class App extends Component {
   constructor(props) {
@@ -12,17 +13,21 @@ export class App extends Component {
       searchV: '',
       page: 1,
       images: [],
+      isLoading: false,
     };
   }
 
   handleSearchSubmit = async searchValue => {
     try {
+      this.setState({ isLoading: true });
       const images = await getImages(searchValue, 1);
 
       this.setState({ searchV: searchValue, page: 1, images });
       console.log(images);
     } catch (error) {
       console.error('Error in handleSearchSubmit:', error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
@@ -33,6 +38,7 @@ export class App extends Component {
     this.setState({ page: nextPage });
 
     try {
+      this.setState({ isLoading: true });
       const images = await getImages(this.state.searchV, nextPage);
 
       this.setState(prevState => ({
@@ -41,14 +47,33 @@ export class App extends Component {
       console.log(images);
     } catch (error) {
       console.error('Error in handleLoadMore:', error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
   render() {
+    const { isLoading } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleSearchSubmit}></Searchbar>
         <ImageGallery dataFromApi={this.state.images}></ImageGallery>
+        {isLoading ? (
+          <RotatingLines
+            visible={true}
+            height="96"
+            width="96"
+            color="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            ariaLabel="rotating-lines-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        ) : (
+          ''
+        )}
+        <br></br>
         <Button onLoadMore={this.handleLoadMore}></Button>
       </>
     );
