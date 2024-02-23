@@ -1,5 +1,6 @@
-import { ImageGalleryItem } from 'components/imagegalleryitem/ImageGalleryItem';
+import { ImageGalleryItem } from '../imagegalleryitem/ImageGalleryItem';
 import css from './imagegallery.module.css';
+import PropTypes from 'prop-types';
 
 export const ImageGallery = ({ dataFromApi }) => {
   if (!dataFromApi || dataFromApi.length === 0) {
@@ -10,4 +11,8 @@ export const ImageGallery = ({ dataFromApi }) => {
   ));
 
   return <ul className={css.ImageGallery}>{galleryItems}</ul>;
+};
+
+ImageGallery.propTypes = {
+  dataFromApi: PropTypes.array,
 };

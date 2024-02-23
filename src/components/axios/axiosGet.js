@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { axiosConfig } from './axiosConfig';
 
 const baseURL = 'https://pixabay.com/api/';
 
-export async function getImages(word, page) {
+export const getImages = async (word, page) => {
   const options = axiosConfig(word, page);
 
   try {
@@ -13,4 +14,9 @@ export async function getImages(word, page) {
     console.error('Error:', error);
     throw error;
   }
-}
+};
+
+getImages.propTypes = {
+  word: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+};
