@@ -3,15 +3,10 @@ import css from './imagegallery.module.css';
 
 export const ImageGallery = ({ dataFromApi }) => {
   if (!dataFromApi || dataFromApi.length === 0) {
-    return null; // Możesz również zwrócić komunikat o braku danych
+    return null;
   }
   const galleryItems = dataFromApi.map(item => (
-    <ImageGalleryItem
-      key={item.id}
-      a={item.pageURL}
-      src={item.webformatURL}
-      alt={item.tags}
-    />
+    <ImageGalleryItem key={item.id} src={item.webformatURL} alt={item.tags} />
   ));
 
   return <ul className={css.ImageGallery}>{galleryItems}</ul>;

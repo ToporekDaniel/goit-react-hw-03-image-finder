@@ -9,10 +9,8 @@ export async function getImages(word, page) {
   try {
     const res = await axios.get(baseURL, options);
     return res.data.hits;
-    // Zwracamy tylko tablicę obiektów "hits"
   } catch (error) {
     console.error('Error:', error);
     throw error;
-    // Rzucamy błąd, aby go obsłużyć w miejscu wywołania
   }
 }
